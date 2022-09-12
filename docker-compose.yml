@@ -1,0 +1,36 @@
+  version: '3.8'
+  services:
+    chalice:
+      build:
+        context: ./
+        dockerfile: ./docker/chalice/Dockerfile
+      platform: linux/amd64
+      tty: true
+      volumes:
+        - ./:/work
+      ports:
+        - "8080:8080"
+    dynamodb-local:
+      platform: linux/amd64
+      image: amazon/dynamodb-local:1.17.2
+      user: root
+      command: -jar DynamoDBLocal.jar -sharedDb -dbPath /data
+      ports:
+        - "8000:8000"
+      volumes:
+        - dynamodb-store:/data
+    dynamodb-admin:
+      platform: linux/amd64
+      image: aaronshaf/dynamodb-admin:4.4.0
+      environment:
+        - DYNAMO_ENDPOINT=dynamodb-local:${DYNAMODB_LOCAL_PORT}
+        - AWS_REGION=ap-northeast-1
+        - AWS_ACCESS_KEY_ID=aws_access_key_id
+        - AWS_SECRET_ACCESS_KEY=aws_secret_access_key
+      ports:
+        - "8001:8001"
+      depends_on:
+        - dynamodb-local
+  volumes:
+    dynamodb-store:
+      driver: local
