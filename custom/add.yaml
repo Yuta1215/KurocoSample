@@ -5,3 +5,7 @@ Resources:
     Properties:
       FunctionName: y-nakamura-api-handler
     Type: AWS::Serverless::Function
+  YnFuncName:
+    Properties:
+      FunctionName: y-nakamura-custom-api-handler
+    Type: AWS::Serverless::Function

@@ -99,6 +99,14 @@ def user_detail():
     return user.detail(args)
 
 
+@app.lambda_function(name='YnFuncName')
+@app.route('/detail2')
+def user_detail2():
+    user = UserController()
+    args = 'a'
+    return user.detail(args)
+
+
 @app.route('/aws')
 def aws_sample():
     import boto3
