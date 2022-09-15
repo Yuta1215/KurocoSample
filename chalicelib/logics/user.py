@@ -1,15 +1,16 @@
+from typing import Final
+from chalicelib.client import Dynamodb
+
+
 class UserLogic:
     def __init__(self) -> None:
-        pass
+        self.__dynamodb = Final[Dynamodb()]
+        self.__list = Final[list]
 
     def list(self) -> list:
+        result = self.__dynamodb.get()
         return [
             {
-                'id': 1,
-                'name': 'test1'
-            },
-            {
-                'id': 2,
-                'name': 'test2'
+                'user': 'name'
             }
         ]

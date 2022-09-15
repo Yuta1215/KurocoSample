@@ -1,10 +1,11 @@
 from typing import TypeVar
 from chalicelib.logics import UserLogic
+from chalicelib.interface import UserControllerInterface
 
 T = TypeVar('T')
 
 
-class UserController:
+class UserController(UserControllerInterface):
     def __init__(self) -> None:
         self.__user = UserLogic()
 

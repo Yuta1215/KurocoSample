@@ -7,11 +7,14 @@ from requests import Response
 from chalicelib.blueprints import extra_routes
 from chalicelib.controllers import UserController
 
+import uuid
+
 app = Chalice(app_name='chalice-sample')
 
 app.register_blueprint(extra_routes)
 
 logger = Logger(service='sample')
+
 
 # app.log.setLevel(logging.DEBUG)
 
@@ -42,6 +45,7 @@ def handle_errors(event, get_response):
         return Response(status_code=500, body=str(e),
                         headers={'Content-Type': 'text/plain'})
 
+
 @app.route('/')
 def index():
     # u = Util()
@@ -57,9 +61,9 @@ def index_main():
     # u = Util()
     # url = 'https://7rfvck7gef.execute-api.us-east-1.amazonaws.com/dev/'
     # response = requests.get(url)
-    logger.info('test')
-    logger.info('テスト')
-    return {'hello': 'world'}
+    return {
+        'user_id': str(uuid.uuid4())
+    }
 
 
 @app.route('/test')
